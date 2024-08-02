@@ -1,7 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from "react-router-dom"
 
 export default function ProductList() {
+    const [products, setProducts] = useState([])
+
+    function getProducts() {
+        fetch("http://localhost:4000/products")
+        .then(response => {
+            if (response.ok) {
+                return response.json()
+            }
+
+            throw new Error()
+        })
+        .then(data => {
+            setProducts(data)
+        })
+        .catch(error => {
+            alert("Unable to get the data")
+        })
+    }
+
+    useEffect(getProducts, [])
   return (
     <div className='container my-4'>
         <h2 className='text-center mb-4'>Products</h2>
@@ -30,7 +50,25 @@ export default function ProductList() {
                 </tr>
             </thead>
             <tbody>
-                
+                {
+                    products.map((product, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{product.id}</td>
+                                <td>{product.name}</td>
+                                <td>{product.brand}</td>
+                                <td>{product.category}</td>
+                                <td>{product.price}</td>
+                                <td><img src={"http://localhost:4000/images/" + product.imageFilename} width="100" alt='product img'/></td>
+                                <td>{product.createdAt.slice(0, 10)}</td>
+                                <td style={{width: "10px", whiteSpace: "nowrap"}}>
+                                    <a className='btn btn-primary btn-sm me-1' href='/admin/products/edit'>Edit</a>
+                                    <button type='button' className='btn btn-danger btn-sm'>Delete</button>
+                                </td>
+                            </tr>
+                        )
+                    })
+                }
             </tbody>
         </table>
     </div>
