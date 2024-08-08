@@ -14,7 +14,7 @@ export default function ProductList() {
             throw new Error()
         })
         .then(data => {
-            setProducts(data)
+            setProducts(data.slice(0, 14))
         })
         .catch(error => {
             alert("Unable to get the data")
