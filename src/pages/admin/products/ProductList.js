@@ -29,7 +29,7 @@ export default function ProductList() {
         <div className='row mb-3'>
             <div className='col'>
                 <Link className='btn btn-primary me-1' to="/admin/products/create" role='button'>Create Product</Link>
-                <button type='button' className='btn btn-outline-primary'>Refresh</button>
+                <button type='button' className='btn btn-outline-primary' onClick={getProducts}>Refresh</button>
             </div>
             <div className='col'>
 
